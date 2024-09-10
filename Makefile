@@ -3,21 +3,28 @@ CC=arm-none-eabi-gcc
 CP=arm-none-eabi-objcopy
 MARCH=cortex-m4
 CFLAGS= -mcpu=$(MARCH) -mthumb -std=gnu11 -Wall -o0
-LDFLAGS= -nostdlib -T linker.ld -Wl,-Map=test.map
+CFLAGS += -DSTM32F429xx 
+CFLAGS +=-ICMSIS/Include -IDevice/STM32F4xx/Include
+LDFLAGS= -nostdlib -T linker.ld -Wl,-Map=build/blinky.map
 
-all: test.hex
+all:
 
-main.o: main.c
+build:
+	mkdir build
+
+test: build build/blinky.hex
+
+build/blinky.o: Test/blinky.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 
-startup.o: startup.c
+build/startup.o: startup.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 
-test.elf: startup.o main.o
+build/blinky.elf: build/startup.o build/blinky.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
-test.hex: test.elf
+build/blinky.hex: build/blinky.elf
 	$(CP) -O ihex $^ $@
 
 clean:
-	rm -rf *.o *.elf *.map *.hex
+	rm -rf build
