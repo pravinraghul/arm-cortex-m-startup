@@ -1,4 +1,4 @@
-ENTRY(Reset_Handler)
+ENTRY(reset_handler)
 
 MEMORY
 {
@@ -10,27 +10,26 @@ SECTIONS
 {
     .text :
     {
-        *(.isr_vector)
+        *(.vector_table)
         *(.text)
-        *(.text.*)
         *(.rodata)
         . = ALIGN(4);
-        _etext = .;
+        end_of_text = .;
     } >FLASH
 
     .data :
     {
-        _sdata = .;
+        start_of_data = .;
         *(.data)
         . = ALIGN(4);
-        _edata = .;
+        end_of_data = .;
     } >SRAM AT >FLASH
 
     .bss :
     {
-        _sbss = .;
+        start_of_bss = .;
         *(.bss)
         . = ALIGN(4);
-        _ebss = .;
+        end_of_bss = .;
     } >SRAM
 }
