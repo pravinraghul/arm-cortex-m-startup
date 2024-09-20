@@ -1,6 +1,4 @@
-## ARM Cortex-M Architecture Startup
+## ARM Cortex-M Startup Code & Linker Script
 
- - Basic minimal startup code and linker script for ARM Cortex-Mx processors
- - Compiled and tested basic blinky code.
-
-**Note:** tested in the STM32F429 discovery board.
+ - Basic minimal startup code and linker script for ARM Cortex-Mx processors to boot up and run.
+ - Compiled and tested on STM32f429 disco board.
